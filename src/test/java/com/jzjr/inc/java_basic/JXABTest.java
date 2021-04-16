@@ -12,6 +12,9 @@ import javax.xml.bind.Unmarshaller;
 import java.io.InputStream;
 import java.io.PrintStream;
 
+/**
+ * 文档参考：https://www.w3cschool.cn/jaxb2
+ */
 @SpringBootTest
 public class JXABTest {
 

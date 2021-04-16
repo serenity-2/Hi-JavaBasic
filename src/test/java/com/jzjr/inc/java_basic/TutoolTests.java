@@ -5,6 +5,11 @@ import com.jzjr.inc.java_basic.bean.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,5 +34,19 @@ public class TutoolTests {
         String formatTime = DateUtil.formatTime(date);
 
         new User();
+    }
+
+    @Test
+    public void test(){
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zdt = now.atZone(zoneId);
+        Date date = Date.from(zdt.toInstant());
+        System.out.println(date);
+        System.out.println(LocalDate.now());
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        System.out.println(dateTimeFormatter.format(LocalDateTime.now()));
+
     }
 }
