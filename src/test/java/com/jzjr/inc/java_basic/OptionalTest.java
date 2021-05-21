@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
+
 @Slf4j
 @SpringBootTest
 public class OptionalTest {
@@ -14,7 +15,7 @@ public class OptionalTest {
      * optional类
      */
     @Test
-    public void print1(){
+    public void print1() {
         //创建一个空的optional
         Optional<Object> empty = Optional.empty();
         //java.util.NoSuchElementException: No value present
@@ -22,7 +23,7 @@ public class OptionalTest {
     }
 
     @Test
-    public void print2(){
+    public void print2() {
         //创建一个包含值的optional，不能传入null类型
         Optional<User> optionalUser = Optional.of(new User("Daisy", 24));
         User user = optionalUser.get();
@@ -34,7 +35,7 @@ public class OptionalTest {
     }
 
     @Test
-    public void print3(){
+    public void print3() {
         //创建一个包含值的optional，可以传入null类型
         User user = null;
         Optional<User> user1 = Optional.ofNullable(user);
@@ -43,16 +44,16 @@ public class OptionalTest {
     }
 
     @Test
-    public void print4(){
+    public void print4() {
         //ifPresent 如果存在一个值，则使用该值调用指定的使用者，否则什么也不做
         Optional<User> optionalUser = Optional.of(new User("Daisy", 24));
         optionalUser.ifPresent(user -> {
-            Assertions.assertEquals(user.getUsername(),"moko");
+            Assertions.assertEquals(user.getUsername(), "moko");
         });
     }
 
     @Test
-    public void print5(){
+    public void print5() {
         //ofElse 返回默认值，如果有值则返回该值，否则返回传递给它的参数值
         User user = null;
         User user1 = Optional.ofNullable(user).orElse(new User("Daisy", 24));
@@ -86,11 +87,11 @@ public class OptionalTest {
     }
 
     @Test
-    public void print8(){
+    public void print8() {
         //orElseThrow 在对象为空时抛出异常
         User user = null;
         try {
-            User result = Optional.ofNullable(user).orElseThrow( () -> new IllegalArgumentException());
+            User result = Optional.ofNullable(user).orElseThrow(() -> new IllegalArgumentException());
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

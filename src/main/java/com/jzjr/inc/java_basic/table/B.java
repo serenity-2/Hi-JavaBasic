@@ -1,8 +1,9 @@
 package com.jzjr.inc.java_basic.table;
 
-public class B extends A{
+public class B extends A {
     public B(String s) {
-        System.out.println("B");;
+        System.out.println("B");
+        ;
     }
 //    public B(String s){
 //        System.out.println("B");

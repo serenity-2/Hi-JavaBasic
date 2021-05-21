@@ -24,10 +24,10 @@ public class JXABTest {
         //创建Marshaller实例
         Marshaller marshaller = jaxbContext.createMarshaller();
         //设置转换参数,设置序列化器是否格式化输出
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         //构造输出环境，这里是标准输出，输出到控制台
         PrintStream out = System.out;
-        marshaller.marshal(user,out);
+        marshaller.marshal(user, out);
     }
 
     public static void XmlToJava() throws JAXBException {
@@ -48,6 +48,7 @@ public class JXABTest {
      * JAXB 转换对象必须拥有无参数构造器
      * 可以有多种方式加载XML数据，从文件中加载只是其中的一种
      * getResourceAsStream("file.xml")方法需要将该XML文件放置于/resources目录下
+     *
      * @param args
      * @throws JAXBException
      */

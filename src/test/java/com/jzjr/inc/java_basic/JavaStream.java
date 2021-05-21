@@ -41,7 +41,7 @@ public class JavaStream {
             list.add(i + "");
         }
         ArrayList<String> list2 = Lists.newArrayList();
-        // 副作用代码
+        // paralleStream并行流
         list.parallelStream().forEach(s -> list2.add(s));
         System.out.println(list2);
     }
@@ -87,6 +87,11 @@ public class JavaStream {
         list.forEach(System.out::println);
     }
 
+    /**
+     * peek与map的区别是
+     * peek的参数是一个消费者，当传入的不是消费者时，peek将不生效，peek返回的流是是原始的流，不对流里面的元素产生变化
+     * map的参数是一个函数，这个函数将作用于流中每个元素，map操作结束后流中的元素可以发生变化，也就是一个新的流了
+     */
     @Test
     public void peek() {
         List<String> list = Stream.of("one", "two", "three", "four")
@@ -175,20 +180,31 @@ public class JavaStream {
     @Test
     public void reduce() {
         List<String> strs = Arrays.asList("H", "E", "L", "L", "O");
-        String concatReduce = strs.stream().reduce("", String::concat);
-        System.out.println(concatReduce);
+        Optional<String> concatReduce = strs.stream().reduce((s, c) ->{
+            String sc = s.concat("-").concat(c);
+            return sc;
+        });
+        System.out.println(concatReduce.get());
     }
 
     @Test
-    public void toArray(){
+    public void toArray() {
         Object[] objects = Stream.of(1, 2, 3, 4, 5).toArray();
-        String[] strings = Stream.of("A","B","C").toArray(String[]::new);
+        String[] strings = Stream.of("A", "B", "C").toArray(String[]::new);
     }
 
     @Test
-    public void concat(){
-        List<Integer> list1 = Arrays.asList(1,2,3);
-        List<Integer> list2 = Arrays.asList(4,3,2);
-        Stream.concat(list1.stream(),list2.stream()).forEach(System.out::print);
+    public void concat() {
+        List<Integer> list1 = Arrays.asList(1, 2, 3);
+        List<Integer> list2 = Arrays.asList(4, 3, 2);
+        Stream.concat(list1.stream(), list2.stream()).forEach(System.out::print);
+    }
+
+    @Test
+    public void stringOperating(){
+        String str = "1,2,3,4,5";
+        String[] split = str.split(",");
+        System.out.println(str.substring(1));
+        System.out.println(str.substring(0, 3));
     }
 }

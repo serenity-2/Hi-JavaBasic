@@ -28,8 +28,9 @@ class JavaBasicApplicationTests {
         // 函数引用也是一种函数式接口，所以也可以将函数引用作为方法的参数
         sayHello(String::toUpperCase, "hello");
     }
+
     // 方法有两个参数，一个是
-    private static void sayHello(Function<String, String> func, String parameter){
+    private static void sayHello(Function<String, String> func, String parameter) {
         String result = func.apply(parameter);
         System.out.println(result);
     }

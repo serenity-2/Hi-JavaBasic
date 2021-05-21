@@ -37,7 +37,7 @@ public class TutoolTests {
     }
 
     @Test
-    public void test(){
+    public void test() {
         LocalDateTime now = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault();
         ZonedDateTime zdt = now.atZone(zoneId);
