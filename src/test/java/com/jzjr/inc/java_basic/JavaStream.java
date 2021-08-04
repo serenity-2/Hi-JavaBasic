@@ -284,7 +284,18 @@ public class JavaStream {
         List<Object> list1 = list.stream().filter(x -> x > 5).reduce(newList, (a, b) -> {
             newList.add(b);
             return a;
-        }, (a, b) -> null).stream().collect(Collectors.toList());
+        }, (a, b) -> null);
         System.out.println(list);
     }
+
+    @Test
+    public void branch() {
+        System.out.println("this is new branch:20210804");
+    }
+
+    @Test
+    public void branch2() {
+        System.out.println("this is new branch:20210804");
+    }
+
 }
