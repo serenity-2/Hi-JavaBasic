@@ -1,5 +1,6 @@
 package com.jzjr.inc.java_basic;
 
+import com.jzjr.inc.java_basic.bean.Person;
 import com.jzjr.inc.java_basic.bean.Product;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -179,12 +180,18 @@ public class JavaStream {
 
     @Test
     public void reduce() {
-        List<String> strs = Arrays.asList("H", "E", "L", "L", "O");
-        Optional<String> concatReduce = strs.stream().reduce((s, c) ->{
-            String sc = s.concat("-").concat(c);
-            return sc;
+        // 求和的2种方式
+        List<Integer> list = Arrays.asList(1, 3, 4, 5, 6);
+        Optional<Integer> sum2 = list.stream().reduce(Integer::sum);
+        Optional<Integer> sum3 = list.stream().reduce((a, b) -> {
+            return Integer.sum(a, b);
         });
-        System.out.println(concatReduce.get());
+//        List<String> strs = Arrays.asList("H", "E", "L", "L", "O");
+//        Optional<String> concatReduce = strs.stream().reduce((s, c) ->{
+//            String sc = s.concat("-").concat(c);
+//            return sc;
+//        });
+//        System.out.println(concatReduce.get());
     }
 
     @Test
@@ -201,10 +208,83 @@ public class JavaStream {
     }
 
     @Test
-    public void stringOperating(){
+    public void stringOperating() {
         String str = "1,2,3,4,5";
         String[] split = str.split(",");
         System.out.println(str.substring(1));
         System.out.println(str.substring(0, 3));
+    }
+
+    @Test
+    public void findMaxString() {
+        List<String> list = Arrays.asList("adnm", "admmt", "pot", "xbangd", "weoujgsd");
+        Optional<String> max = list.stream().max(Comparator.comparing(String::length));
+        System.out.println("最长的字符串：" + max.get());
+    }
+
+    @Test
+    public void flatmap() {
+        List<String> list = Arrays.asList("m,k,l,a", "1,3,5,7");
+        List<String> listNew = list.stream().flatMap(s -> {
+            // 将每个元素转换成一个stream
+            String[] split = s.split(",");
+            Stream<String> s2 = Arrays.stream(split);
+            return s2;
+        }).collect(Collectors.toList());
+        System.out.println("处理前的集合：" + list);
+        System.out.println("处理后的集合：" + listNew);
+    }
+
+    @Test
+    public void reduceTest() {
+        List<Person> personList = new ArrayList<Person>();
+        personList.add(new Person("Tom", 8900, 23, "male", "New York"));
+        personList.add(new Person("Jack", 7000, 25, "male", "Washington"));
+        personList.add(new Person("Lily", 7800, 21, "female", "Washington"));
+        //求工资之和 一
+        Optional<Integer> optional = personList.stream().map(Person::getSalary).reduce(Integer::sum);
+        System.out.println(optional.get());
+        //求工资之和 二
+        Integer sum2 = personList.stream().reduce(0, (sum, p) -> sum += p.getSalary(), Integer::sum);
+        System.out.println(sum2);
+    }
+
+    /**
+     * reduce的第三种重载方法
+     * U> U reduce(U identity,
+     * BiFunction<U, ? super T, U> accumulator,
+     * BinaryOperator<U> combiner);
+     * 第一个参数：给定的一个初始值(类型U)，该值同时也是实际返回实例的数据类型(类型U)
+     * 第二个参数：累加器，通过类型为U和? super T的两个输入值计算得到一个U类型的结果返回
+     * 第三个参数：如果使用了parallelStream，reduce的操作是并发执行的，为了避免竞争，每个reduce线程都会有独立的result
+     * combiner的作用是合并每个result得到独立的结果，在非并行流中，该参数不生效
+     */
+    @Test
+    public void reduceTest2() {
+        ArrayList<Integer> list = new ArrayList<>();
+        Stream<Integer> integerStream = Stream.of(1, 2, 3, 4, 5);
+        ArrayList<Integer> newList = integerStream.reduce(list, (a, b) -> {
+            //list会作为a的第一个参数
+            System.out.println("a=\t" + a);
+            //b的第一个参数是流中第一个元素
+            System.out.println("b=\t" + b);
+            list.add(b);
+            System.out.println("list\t" + list);
+            //这里返回必须是a，因为a是初始值list的类型，返回值和初始值类型要相同
+            return a;
+            //这里因为是非并行流，给null或a或b都没有影响
+        }, (a, b) -> null);
+        System.out.println(newList);
+    }
+
+    @Test
+    public void copy() {
+        List<Integer> list = Arrays.asList(1, 4, 5, 6, 7);
+        ArrayList<Object> newList = new ArrayList<>();
+        List<Object> list1 = list.stream().filter(x -> x > 5).reduce(newList, (a, b) -> {
+            newList.add(b);
+            return a;
+        }, (a, b) -> null).stream().collect(Collectors.toList());
+        System.out.println(list);
     }
 }

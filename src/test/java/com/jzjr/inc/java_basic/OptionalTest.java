@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Slf4j
 @SpringBootTest
 public class OptionalTest {
@@ -45,24 +47,31 @@ public class OptionalTest {
 
     @Test
     public void print4() {
-        //ifPresent 如果存在一个值，则使用该值调用指定的使用者，否则什么也不做
-        Optional<User> optionalUser = Optional.of(new User("Daisy", 24));
-        optionalUser.ifPresent(user -> {
-            Assertions.assertEquals(user.getUsername(), "moko");
+        //ifPresent 如果存在一个值，则使用该值调用指定的使用者，否则空指针异常
+        User user = new User("daisy", 24);
+        Optional<User> optionalUser = Optional.of(user);
+        optionalUser.ifPresent(user1 -> {
+            assertEquals(user1.getUsername(), "moko");
         });
     }
 
     @Test
     public void print5() {
-        //ofElse 返回默认值，如果有值则返回该值，否则返回传递给它的参数值
+        //orElse 返回默认值，如果有值则返回该值，否则返回传递给它的参数值
         User user = null;
         User user1 = Optional.ofNullable(user).orElse(new User("Daisy", 24));
+        //User{username='Daisy', age=24}
         System.out.println(user1);
     }
 
+    /**
+     * orElse与orElseGet的区别
+     * orElse：不管Optional是否有值，orElse都会执行
+     * orElseGet：当Optional没有值是会执行，有值时则不会执行
+     */
     @Test
     public void print6() {
-        User user = null;
+        User user = new User("moko", 23);
         //当对象为空时都返回默认对象
         log.info("Using orElse");
         User result = Optional.ofNullable(user).orElse(createNewUser());
@@ -95,6 +104,12 @@ public class OptionalTest {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void print9(){
+        User user = new User("Anne", 25);
+        String name = Optional.ofNullable(user).map(User::getUsername).orElse("Anbe");
+        assertEquals(name, user.getUsername());
     }
 }
