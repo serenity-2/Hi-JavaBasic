@@ -290,7 +290,7 @@ public class JavaStream {
 
     @Test
     public void branch() {
-        System.out.println("this is new branch:20210804");
+        System.out.println("hello mars");
     }
 
     @Test
