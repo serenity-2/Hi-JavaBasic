@@ -284,7 +284,7 @@ public class JavaStream {
         List<Object> list1 = list.stream().filter(x -> x > 5).reduce(newList, (a, b) -> {
             newList.add(b);
             return a;
-        }, (a, b) -> null);
+        }, (a, b) -> null).stream().collect(Collectors.toList());
         System.out.println(list);
     }
 
