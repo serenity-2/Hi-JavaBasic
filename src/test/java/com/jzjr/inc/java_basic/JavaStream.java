@@ -295,7 +295,7 @@ public class JavaStream {
 
     @Test
     public void change() {
-        System.out.println("only change can be  forever");
+        System.out.println("only change can be forever");
     }
 
 
