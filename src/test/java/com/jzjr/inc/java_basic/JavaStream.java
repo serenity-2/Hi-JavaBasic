@@ -287,4 +287,10 @@ public class JavaStream {
         }, (a, b) -> null).stream().collect(Collectors.toList());
         System.out.println(list);
     }
+
+    @Test
+    public void branch() {
+        System.out.println("this is new branch:20210804");
+    }
+
 }
