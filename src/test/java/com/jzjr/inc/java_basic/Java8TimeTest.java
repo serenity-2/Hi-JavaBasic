@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @SpringBootTest
 public class Java8TimeTest {
@@ -46,5 +47,14 @@ public class Java8TimeTest {
         LocalDateTime birthday = LocalDateTime.parse(future, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         System.out.println(birthday);
 
+    }
+
+    @Test
+    public void print4() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zdt = localDateTime.atZone(zoneId);
+        Date date = Date.from(zdt.toInstant());
+        System.out.println(date);
     }
 }
