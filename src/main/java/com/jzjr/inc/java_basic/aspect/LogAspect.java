@@ -1,5 +1,7 @@
 package com.jzjr.inc.java_basic.aspect;
 
+import com.jzjr.inc.java_basic.annotation.LogService;
+import com.jzjr.inc.java_basic.controller.UserController;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,6 +11,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
@@ -19,23 +22,38 @@ import java.util.Arrays;
 @Component
 public class LogAspect {
 
-    @Pointcut("execution(public * com.jzjr.inc.java_basic.controller..*.*(..))")
+    @Pointcut("execution(public * com.jzjr.inc.java_basic.controlle..*.*(..))")
     public void webLog() {}
+
+    @Pointcut("@annotation(com.jzjr.inc.java_basic.annotation.LogService)")
+    public void LogPointCut() {}
 
     /**
      * 前置通知，在连接点值之前执行的通知
      * @param joinPoint
      */
-    @Before(value = "webLog())")
-    public void doBefore(JoinPoint joinPoint) {
+    @Before(value = "LogPointCut())")
+    public void doBefore(JoinPoint joinPoint) throws NoSuchMethodException {
         log.info("前置通知开始执行");
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert requestAttributes != null;
         HttpServletRequest request = requestAttributes.getRequest();
         log.info("url:{}",request.getRequestURL().toString());
         log.info("ip:{}",request.getRemoteAddr());
         log.info("http_method:{}",request.getMethod());
         log.info("class_method:{}",joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName());
         log.info("args:{}", Arrays.toString(joinPoint.getArgs()));
+        Class<?> userControllerClass = UserController.class;
+        Method hello = userControllerClass.getMethod("hello",String.class);
+        if (hello.isAnnotationPresent(LogService.class)) {
+            log.info("hello上面有注解LogService");
+            LogService logService = hello.getAnnotation(LogService.class);
+            String code = logService.code();
+            String name = logService.name();
+            System.out.println("code："+code+"\tname："+name);
+        } else {
+            log.info("hello上面没有注解LogService");
+        }
     }
 
     /**
