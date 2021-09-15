@@ -57,6 +57,11 @@ public class AopTest {
         System.out.println(o);
     }
 
+    @Test
+    public void testChange() {
+        System.out.println("dev-20200915");
+    }
+
 }
 
 
