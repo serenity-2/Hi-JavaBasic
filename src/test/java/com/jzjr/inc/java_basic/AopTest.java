@@ -49,7 +49,7 @@ public class AopTest {
 
     @Test
     public void saveUser() {
-        User lily = new User("lily",26);
+        User lily = new User("lily",22);
         User moko = new User("moko",25);
         Map<Object, Object> hashMap = new HashMap<>();
         hashMap.put(lily,"lily");
