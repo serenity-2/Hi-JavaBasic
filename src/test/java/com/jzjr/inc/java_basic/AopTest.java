@@ -42,8 +42,8 @@ public class AopTest {
 
     @Test
     public void sortTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        ArrayList<Object> list = new ArrayList<>();
-        ArrayList<Object> StringList = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
+        List<Object> StringList = new ArrayList<>();
         list = StringList;
     }
 
