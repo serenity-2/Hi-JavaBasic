@@ -59,9 +59,9 @@ public class OptionalTest {
     public void print5() {
         //orElse 返回默认值，如果有值则返回该值，否则返回传递给它的参数值
         User user = null;
-        User user1 = Optional.ofNullable(user).orElse(new User("Daisy", 24));
+        String daisy = Optional.ofNullable(user.getUsername()).orElse("daisy");
         //User{username='Daisy', age=24}
-        System.out.println(user1);
+        System.out.println(daisy);
     }
 
     /**

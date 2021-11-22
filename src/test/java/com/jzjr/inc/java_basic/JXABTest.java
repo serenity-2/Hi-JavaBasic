@@ -1,8 +1,7 @@
 package com.jzjr.inc.java_basic;
 
 import com.jzjr.inc.java_basic.bean.User;
-import com.sun.xml.internal.bind.api.JAXBRIContext;
-import org.junit.jupiter.api.Test;
+import com.sun.xml.bind.api.JAXBRIContext;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.xml.bind.JAXBContext;

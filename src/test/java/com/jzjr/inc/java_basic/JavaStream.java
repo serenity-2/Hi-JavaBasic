@@ -2,10 +2,12 @@ package com.jzjr.inc.java_basic;
 
 import com.jzjr.inc.java_basic.bean.Person;
 import com.jzjr.inc.java_basic.bean.Product;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -106,11 +108,11 @@ public class JavaStream {
 
     @Test
     public void sorted() {
-        String[] arr = new String[]{"b_123", "c+342", "b#632", "d_123"};
+        String[] arr = new String[]{"d_123", "b_123", "b#632", "c+342"};
         List<String> l = Arrays.stream(arr)
                 .sorted((s1, s2) -> {
                     if (s1.charAt(0) == s2.charAt(0)) {
-                        return s1.substring(2).compareTo(s2.substring(2));
+                        return s1.substring(1).compareTo(s2.substring(1));
                     } else {
                         return s1.charAt(0) - s2.charAt(0);
                     }
@@ -118,7 +120,17 @@ public class JavaStream {
                 .collect(Collectors.toList());
         //[b_123, b#632, c+342, d_123]
         System.out.println(l);
+    }
 
+    /**
+     * stream.sorted() 无参方法自然升序排序，如果需要降序，使用Comparator.reverseOrder()
+     */
+    @Test
+    public void sorted2() {
+        List<String> stringList = Arrays.asList("AA232","FD454","WE343");
+        List<String> collect = stringList.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        // [AA232, FD454, WE343]
+        System.out.println(collect);
     }
 
     @Test
