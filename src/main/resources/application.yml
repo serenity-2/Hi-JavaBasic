@@ -1,6 +1,7 @@
 spring:
   datasource:
-    username: test
-    password: Root_123test
+    username: XXXX
+    password: XXXX
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:p6spy:mysql://10.33.32.243:3306/g_platform?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=Asia/Shanghai
+    url: jdbc:p6spy:mysql://XXXXXXXXXXX:XXXXX/XXXXX?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=Asia/Shanghai
+
